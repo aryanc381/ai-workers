@@ -20,7 +20,7 @@ export default function LoginPage() {
       if (data.status !== 200) return setError(data.msg);
       navigate("/");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError((err as Error).message);
     }
   }
 

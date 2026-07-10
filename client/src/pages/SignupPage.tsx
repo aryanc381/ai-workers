@@ -21,7 +21,7 @@ export default function SignupPage() {
       if (data.status !== 200) return setError(data.msg);
       navigate("/auth/login");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      setError((err as Error).message);
     }
   }
 
