@@ -14,7 +14,6 @@ export default function SignupPage() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     try {
       const data = await signup({ email, password, fullName });
       if (data.status !== 200) return toast.error(data.msg);
@@ -34,56 +33,25 @@ export default function SignupPage() {
               <h1 className="text-2xl font-bold">Create account</h1>
               <p className="text-sm text-muted-foreground">Fill in the form below to create your account</p>
             </div>
-
             <Field>
               <FieldLabel htmlFor="name">Full Name</FieldLabel>
-              <Input
-                id="name"
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
-                placeholder="John Doe"
-                required
-              />
+              <Input id="name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="John Doe" required />
             </Field>
-
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="m@example.com"
-                required
-              />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="m@example.com" required />
               <FieldDescription>We'll use this to contact you.</FieldDescription>
             </Field>
-
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                minLength={6}
-              />
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
               <FieldDescription>Must be at least 6 characters long.</FieldDescription>
             </Field>
-
             <Button type="submit">Sign up</Button>
-
-            <p className="text-center text-sm text-muted-foreground">
-              Already have an account?{" "}
-              <Link to="/auth/login" className="underline underline-offset-4">
-                Sign in
-              </Link>
-            </p>
+            <p className="text-center text-sm text-muted-foreground">Already have an account? <Link to="/auth/login" className="underline underline-offset-4">Sign in</Link></p>
           </FieldGroup>
         </form>
       </div>
-
       <div className="hidden bg-muted md:block" />
     </div>
   );

@@ -13,7 +13,6 @@ export default function LoginPage() {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-
     try {
       const data = await login({ email, password });
       if (data.status !== 200) return toast.error(data.msg);
@@ -33,42 +32,19 @@ export default function LoginPage() {
               <h1 className="text-2xl font-bold">Sign in</h1>
               <p className="text-sm text-muted-foreground">Enter your email below to sign in</p>
             </div>
-
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="m@example.com"
-                required
-              />
+              <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="m@example.com" required />
             </Field>
-
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </Field>
-
             <Button type="submit">Sign in</Button>
-
-            <p className="text-center text-sm text-muted-foreground">
-              Don't have an account?{" "}
-              <Link to="/auth/signup" className="underline underline-offset-4">
-                Sign up
-              </Link>
-            </p>
+            <p className="text-center text-sm text-muted-foreground">Don't have an account? <Link to="/auth/signup" className="underline underline-offset-4">Sign up</Link></p>
           </FieldGroup>
         </form>
       </div>
-
       <div className="hidden bg-muted md:block" />
     </div>
   );
