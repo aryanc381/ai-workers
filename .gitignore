@@ -4,6 +4,10 @@ dist/
 .env.local
 .env.*.local
 *.tsbuildinfo
+prisma.config.js
+prisma.config.js.map
+prisma.config.d.ts
+prisma.config.d.ts.map
 .DS_Store
 *.log
 npm-debug.log*
