@@ -1,1 +1,0 @@
-{"root":["./src/env.ts","./src/index.ts","./src/routes/index.ts","./src/routes/auth/login.route.ts","./src/routes/auth/signup.route.ts","./src/services/auth.service.ts"],"version":"6.0.3"}
