@@ -17,7 +17,7 @@ router.get("/signup/health", async (req, res) => {
 
 router.post("/signup", validate(signupSchema), async (req, res) => {
   try {
-    const { email, password, fullName } = req.body as z.infer<typeof signupSchema>;
+    const { email, password, fullName } = req.body;
     const result = await signup({ email, password, fullName });
     return res.json(result);
   } catch (err) {
