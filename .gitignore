@@ -11,3 +11,4 @@ prisma.config.d.ts.map
 .DS_Store
 *.log
 npm-debug.log*
+server/src/generated/
