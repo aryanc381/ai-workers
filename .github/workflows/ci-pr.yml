@@ -2,6 +2,9 @@ name: CI-Server
 
 on:
     pull_request:
+        branches:
+            - main
+            - dev
         paths:
             - "server/**"
 defaults:
