@@ -1,0 +1,22 @@
+name: CI-Server
+
+on:
+    pull_request:
+        paths:
+            - "server/**"
+defaults:
+    run:
+        working-directory: server
+jobs:   
+    checks:
+        runs-on: ubuntu-latest
+        container: node:22-alpine
+        steps:
+            - name: "Installing dependencies"
+              uses: actions/checkout@v4
+
+            - name: "Installing dependencies" 
+              run: npm ci
+
+            - name: "Type check"
+              run: npx tsc --noEmit
