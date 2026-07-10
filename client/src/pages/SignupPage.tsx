@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel, FieldDescription } from "@/components/ui/field";
+import { signup } from "@/services/auth.service";
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -15,16 +16,13 @@ export default function SignupPage() {
     e.preventDefault();
     setError("");
 
-    const res = await fetch("http://localhost:3000/api/v1/auth/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, fullName }),
-    });
-
-    const data = await res.json();
-    if (data.status !== 200) return setError(data.msg);
-
-    navigate("/auth/login");
+    try {
+      const data = await signup({ email, password, fullName });
+      if (data.status !== 200) return setError(data.msg);
+      navigate("/auth/login");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    }
   }
 
   return (
