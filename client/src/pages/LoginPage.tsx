@@ -19,8 +19,8 @@ export default function LoginPage() {
       const data = await login({ email, password });
       if (data.status !== 200) return setError(data.msg);
       navigate("/");
-    } catch (err) {
-      setError((err as Error).message);
+    }     catch (err: any) {
+      setError(err.message);
     }
   }
 

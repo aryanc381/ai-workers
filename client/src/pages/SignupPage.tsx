@@ -20,8 +20,8 @@ export default function SignupPage() {
       const data = await signup({ email, password, fullName });
       if (data.status !== 200) return setError(data.msg);
       navigate("/auth/login");
-    } catch (err) {
-      setError((err as Error).message);
+    }     catch (err: any) {
+      setError(err.message);
     }
   }
 
