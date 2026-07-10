@@ -1,15 +1,13 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import Login from "./pages/Login.tsx";
-import Signup from "./pages/Signup.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
+import LoginPage from "@/pages/LoginPage.tsx";
+import SignupPage from "@/pages/SignupPage.tsx";
 
 export default function App() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/" element={<Dashboard />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="/auth/login" element={<LoginPage />} />
+      <Route path="/auth/signup" element={<SignupPage />} />
+      <Route path="*" element={<Navigate to="/auth/login" replace />} />
     </Routes>
   );
 }

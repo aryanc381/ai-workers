@@ -1,33 +1,27 @@
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Tight", sans-serif;
+  --radius: 0.1vw;
+  --radius-lg: 0.1vw;
+  --radius-xl: 0.1vw;
+  --radius-2xl: 0.1vw;
+
+  --color-background: #ffffff;
+  --color-foreground: #0a0a0b;
+  --color-muted: #f0f0f0;
+  --color-muted-foreground: #6b7280;
+  --color-primary: #0a0a0b;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #f0f0f0;
+  --color-secondary-foreground: #0a0a0b;
+  --color-border: #e5e5e5;
+  --color-ring: #a1a1aa;
+  --color-destructive: #ef4444;
 }
 
 body {
   font-family: "Inter Tight", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: #f9fafb;
-  color: #111827;
-  min-height: 100vh;
-}
-
-#root {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-input {
-  font-family: inherit;
 }
