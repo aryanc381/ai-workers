@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner";
+import { Toaster } from "sonner";
 import LoginPage from "@/pages/LoginPage.tsx";
 import SignupPage from "@/pages/SignupPage.tsx";
 
@@ -11,7 +11,7 @@ export default function App() {
         <Route path="/auth/signup" element={<SignupPage />} />
         <Route path="*" element={<Navigate to="/auth/login" replace />} />
       </Routes>
-      <Toaster />
+      <Toaster theme="dark" />
     </>
   );
 }
