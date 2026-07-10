@@ -3,5 +3,6 @@ dotenv.config();
 
 export const env = {
     PORT: process.env.PORT,
-    DB_URL: process.env.DB_URL
+    DB_URL: process.env.DB_URL,
+    BCRYPT_SALT: process.env.BCRYPT_SALT
 }
