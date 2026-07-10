@@ -4,7 +4,6 @@ import loginRouter from "./auth/login.route.js";
 
 const router = Router();
 
-router.use("/auth", signupRouter);
-router.use("/auth", loginRouter);
+router.use("/auth", signupRouter, loginRouter);
 
 export default router;

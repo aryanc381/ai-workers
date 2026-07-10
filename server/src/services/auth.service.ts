@@ -1,11 +1,12 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../lib/prisma.js";
+import { env } from "../env.js";
 
 export async function signup(input: { email: string; password: string; fullName: string }) {
   const existingUser = await prisma.user.findUnique({ where: { email: input.email } });
   if (existingUser) return { status: 409, msg: `User ${input.fullName} is already present in database.` };
 
-  const hashedPassword = await bcrypt.hash(input.password, 10);
+  const hashedPassword = await bcrypt.hash(input.password, Number(env.BCRYPT_SALT));
   const newUser = await prisma.user.create({
     data: { email: input.email, password: hashedPassword, fullName: input.fullName, user_type: "user" },
   });
