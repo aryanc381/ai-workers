@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
@@ -9,18 +10,17 @@ export default function LoginPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setError("");
 
     try {
       const data = await login({ email, password });
-      if (data.status !== 200) return setError(data.msg);
+      if (data.status !== 200) return toast.error(data.msg);
+      toast.success("Login successful");
       navigate("/");
-    }     catch (err: any) {
-      setError(err.message);
+    } catch (err: any) {
+      toast.error(err.message);
     }
   }
 
@@ -33,8 +33,6 @@ export default function LoginPage() {
               <h1 className="text-2xl font-bold">Sign in</h1>
               <p className="text-sm text-muted-foreground">Enter your email below to sign in</p>
             </div>
-
-            {error && <p className="text-center text-sm text-red-500">{error}</p>}
 
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
