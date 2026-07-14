@@ -148,8 +148,8 @@ const data = {
   ],
   documents: [
     {
-      name: "Data Library",
-      url: "#",
+      name: "Plugins",
+      url: "/dashboard/plugin",
       icon: (
         <DatabaseIcon
         />

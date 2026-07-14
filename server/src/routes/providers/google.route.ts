@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { buildGoogleAuthUrl } from "../../integrations/google/oauth.js";
+import { env } from "../../env.js";
 import { getGoogleAccountStatus, linkGoogleAccount } from "../../services/google.service.js";
 
 const router = Router();
@@ -40,11 +41,11 @@ router.get("/google/callback", async (req, res) => {
 
     const parsedState = JSON.parse(stateValue) as { userId: number; phoneNumber: string };
 
-    const linkedAccount = await linkGoogleAccount(parsedState.userId, parsedState.phoneNumber, codeValue);
+    await linkGoogleAccount(parsedState.userId, parsedState.phoneNumber, codeValue);
 
-    return res.json({ status: 200, msg: "Google account linked successfully.", data: linkedAccount });
+    return res.redirect(`${env.FRONTEND_URL}/dashboard/plugin?google=linked`);
   } catch (err) {
-    return res.json({ status: 500, msg: "Failed to complete Google OAuth callback." });
+    return res.redirect(`${env.FRONTEND_URL}/dashboard/plugin?google=failed`);
   }
 });
 
