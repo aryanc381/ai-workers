@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.use('/api/v1', rootRouter);
 
-app.listen(env.PORT, () => { console.log(`backend for ai-worker is live @${env.PORT}.`)});
+app.listen(env.PORT, () => { console.log(`backend for ai-worker is @${env.PORT}.`)});
 
 app.get('/', async (req, res) => {
     return res.json({ status: 200, msg: 'ai-workers-backend is healthy.' });

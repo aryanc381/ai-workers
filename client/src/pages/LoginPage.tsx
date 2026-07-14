@@ -38,7 +38,7 @@ export default function LoginPage() {
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+              <Input id="password" type="password" placeholder="****************" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </Field>
             <Button type="submit">Sign in</Button>
             <p className="text-center text-sm text-muted-foreground">Don't have an account? <Link to="/auth/signup" className="underline underline-offset-4">Sign up</Link></p>
