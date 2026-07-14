@@ -7,7 +7,7 @@ services:
       - "18789:18789"
     volumes:
       - openclaw-state:/home/node/.openclaw
-    command: ["--allow-unconfigured"]
+    command: ["node", "openclaw.mjs", "gateway", "--allow-unconfigured"]
 
 volumes:
   openclaw-state:
