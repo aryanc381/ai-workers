@@ -7,21 +7,14 @@ const router = Router();
 
 router.get("/google/start", async (req, res) => {
   try {
-    const userIdValue = req.query.userId;
-    const phoneNumberValue = req.query.phoneNumber;
+    const phoneNumberValue = req.query.phoneNumber?.toString().trim();
 
-    if (typeof userIdValue !== "string" || typeof phoneNumberValue !== "string") {
-      return res.json({ status: 400, msg: "userId and phoneNumber are required." });
+    if (!phoneNumberValue) {
+      return res.json({ status: 400, msg: "phoneNumber is required." });
     }
 
-    const userId = Number(userIdValue);
-
-    if (!Number.isInteger(userId) || userId <= 0 || !phoneNumberValue) {
-      return res.json({ status: 400, msg: "userId and phoneNumber are required." });
-    }
-
-    // Keep state minimal so we can restore the right user on callback.
-    const state = JSON.stringify({ userId, phoneNumber: phoneNumberValue });
+    // Keep the phone number in state so the callback can finish linking.
+    const state = JSON.stringify({ phoneNumber: phoneNumberValue });
     const authUrl = buildGoogleAuthUrl(state);
 
     return res.redirect(authUrl);
@@ -32,16 +25,21 @@ router.get("/google/start", async (req, res) => {
 
 router.get("/google/callback", async (req, res) => {
   try {
-    const codeValue = req.query.code;
-    const stateValue = req.query.state;
+    const codeValue = req.query.code?.toString();
+    const stateValue = req.query.state?.toString();
 
-    if (typeof codeValue !== "string" || typeof stateValue !== "string") {
+    if (!codeValue || !stateValue) {
       return res.json({ status: 400, msg: "code and state are required." });
     }
 
-    const parsedState = JSON.parse(stateValue) as { userId: number; phoneNumber: string };
+    const parsedState = JSON.parse(stateValue) as { phoneNumber: string };
+    const userId = req.user?.userId;
 
-    await linkGoogleAccount(parsedState.userId, parsedState.phoneNumber, codeValue);
+    if (!userId) {
+      return res.json({ status: 401, msg: "Unauthorized." });
+    }
+
+    await linkGoogleAccount(userId, parsedState.phoneNumber, codeValue);
 
     return res.redirect(`${env.FRONTEND_URL}/dashboard/plugin?google=linked`);
   } catch (err) {
@@ -51,16 +49,10 @@ router.get("/google/callback", async (req, res) => {
 
 router.get("/google/status", async (req, res) => {
   try {
-    const userIdValue = req.query.userId;
+    const userId = req.user?.userId;
 
-    if (typeof userIdValue !== "string") {
-      return res.json({ status: 400, msg: "userId is required." });
-    }
-
-    const userId = Number(userIdValue);
-
-    if (!Number.isInteger(userId) || userId <= 0) {
-      return res.json({ status: 400, msg: "userId is required." });
+    if (!userId) {
+      return res.json({ status: 401, msg: "Unauthorized." });
     }
 
     const googleAccount = await getGoogleAccountStatus(userId);

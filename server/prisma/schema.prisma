@@ -18,6 +18,7 @@ model User {
   fullName     String
   password     String
   user_type    String
+  token        String?        @unique
   googleAccount GoogleAccount?
 }
 

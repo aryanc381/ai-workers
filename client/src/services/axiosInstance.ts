@@ -1,7 +1,18 @@
 import axios from "axios";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL as string | undefined;
+
+function requireApiBaseUrl() {
+  if (!API_BASE_URL) {
+    throw new Error("VITE_API_BASE_URL is missing.");
+  }
+
+  return API_BASE_URL;
+}
+
 const api = axios.create({
-  baseURL: "http://localhost:3000/api/v1",
+  baseURL: `${requireApiBaseUrl()}/api/v1`,
+  withCredentials: true,
 });
 
 api.interceptors.response.use(

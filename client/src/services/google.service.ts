@@ -18,8 +18,10 @@ function requireApiBaseUrl() {
   return API_BASE_URL;
 }
 
-export async function getGoogleLinkStatus(userId: number) {
-  const response = await fetch(`${requireApiBaseUrl()}/api/v1/providers/google/status?userId=${userId}`);
+export async function getGoogleLinkStatus() {
+  const response = await fetch(`${requireApiBaseUrl()}/api/v1/providers/google/status`, {
+    credentials: "include",
+  });
   if (!response.ok) {
     throw new Error("Failed to fetch Google link status.");
   }
@@ -28,6 +30,6 @@ export async function getGoogleLinkStatus(userId: number) {
   return data.data as GoogleLinkStatus;
 }
 
-export function getGoogleAuthUrl(userId: number, phoneNumber: string) {
-  return `${requireApiBaseUrl()}/api/v1/providers/google/start?userId=${userId}&phoneNumber=${phoneNumber}`;
+export function getGoogleAuthUrl(phoneNumber: string) {
+  return `${requireApiBaseUrl()}/api/v1/providers/google/start?phoneNumber=${phoneNumber}`;
 }
