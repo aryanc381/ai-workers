@@ -33,8 +33,8 @@ export function verifyAuthToken(token: string) {
 export function getAuthCookieOptions() {
   return {
     httpOnly: true,
-    sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none" as const,
+    secure: true,
     path: "/",
     maxAge: cookieMaxAge,
   };
@@ -43,8 +43,8 @@ export function getAuthCookieOptions() {
 export function getClearAuthCookieOptions() {
   return {
     httpOnly: true,
-    sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
+    sameSite: "none" as const,
+    secure: true,
     path: "/",
   };
 }

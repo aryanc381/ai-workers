@@ -17,7 +17,7 @@ export default function LoginPage() {
       const data = await login({ email, password });
       if (data.status !== 200) return toast.error(data.msg);
       toast.success("Login successful");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err: any) {
       toast.error(err.message);
     }
