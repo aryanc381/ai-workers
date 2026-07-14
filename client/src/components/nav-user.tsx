@@ -104,7 +104,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={handleLogout}>
+            <DropdownMenuItem onSelect={handleLogout} className="cursor-pointer">
               <LogOutIcon
               />
               Log out
