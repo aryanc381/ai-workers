@@ -14,7 +14,7 @@ export default function App() {
         <Route path="/" element={<DashboardPage />} />
         <Route path="*" element={<Navigate to="/auth/login" replace />} />
       </Routes>
-      <Toaster theme="dark" />
+      <Toaster theme="light" />
     </TooltipProvider>
   );
 }
