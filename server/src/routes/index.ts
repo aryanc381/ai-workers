@@ -6,6 +6,6 @@ import chatRouter from "./chat/chat.route.js";
 const router = Router();
 
 router.use("/auth", signupRouter, loginRouter);
-router.use("/backend", chatRouter);
+router.use("/backend/chat", chatRouter);
 
 export default router;
