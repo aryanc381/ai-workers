@@ -72,7 +72,7 @@ export function GoogleCalendarCard() {
       </Card>
       <GoogleLinkModal
         open={isModalOpen}
-        defaultPhoneNumber={status?.googleAccount?.phoneNumber ?? ""}
+        defaultPhoneNumber={status?.googleAccount?.phoneNumber}
         onClose={() => setIsModalOpen(false)}
         onConfirm={(phoneNumber) => handleLink(phoneNumber)}
       />
