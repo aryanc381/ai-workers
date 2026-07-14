@@ -78,7 +78,7 @@ export async function exchangeGoogleCode(code: string): Promise<GoogleTokenSet> 
 // this 
 export async function fetchGoogleAccountIdentity(accessToken: string): Promise<GoogleAccountIdentity> {
     const { data } = await axios.get<{sub: string; email: string }>(
-        env.GOOGLE_AUTH_ENDPOINT!,
+        env.GOOGLE_USERINFO_ENDPOINT!,
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
