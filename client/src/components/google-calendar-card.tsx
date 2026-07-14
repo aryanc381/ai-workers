@@ -55,7 +55,7 @@ export function GoogleCalendarCard() {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-[1vw] p-[0.75vw] pt-[0.15vw]">
+      <CardContent className="space-y-[1vw] mt-[-1vw] p-[0.75vw] pt-[0.15vw]">
         <div className="rounded-2xl border border-border/70 bg-muted/20 p-[0.75vw] text-sm">
           <div className="flex items-center justify-between gap-[0.5vw]">
             <span className="text-muted-foreground">Link status</span>
