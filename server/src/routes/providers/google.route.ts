@@ -43,6 +43,7 @@ router.get("/google/callback", async (req, res) => {
 
     return res.redirect(`${env.FRONTEND_URL}/dashboard/plugin?google=linked`);
   } catch (err) {
+    console.error("Google OAuth callback failed:", err);
     return res.redirect(`${env.FRONTEND_URL}/dashboard/plugin?google=failed`);
   }
 });
