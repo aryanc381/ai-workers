@@ -1,6 +1,13 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../lib/prisma.js";
 import { env } from "../env.js";
+import { signAuthToken } from "../lib/jwt.js";
+
+export type AuthUser = {
+  id: number;
+  email: string;
+  fullName: string;
+};
 
 export async function signup(input: { email: string; password: string; fullName: string }) {
   const existingUser = await prisma.user.findUnique({ where: { email: input.email } });
@@ -21,5 +28,45 @@ export async function login(input: { email: string; password: string }) {
   const auth = await bcrypt.compare(input.password, existingUser.password);
   if (!auth) return { status: 401, msg: `Invalid credentials for ${existingUser.email}.` };
 
-  return { status: 200, msg: "Login successful.", userId: existingUser.id };
+  const token = signAuthToken({
+    userId: existingUser.id,
+    email: existingUser.email,
+    fullName: existingUser.fullName,
+  });
+
+  await prisma.user.update({
+    where: { id: existingUser.id },
+    data: { token },
+  });
+
+  return {
+    status: 200,
+    msg: "Login successful.",
+    token,
+    user: {
+      id: existingUser.id,
+      email: existingUser.email,
+      fullName: existingUser.fullName,
+    } satisfies AuthUser,
+  };
+}
+
+export async function getCurrentUser(userId: number) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      id: true,
+      email: true,
+      fullName: true,
+    },
+  });
+
+  return user;
+}
+
+export async function logout(userId: number) {
+  await prisma.user.update({
+    where: { id: userId },
+    data: { token: null },
+  });
 }

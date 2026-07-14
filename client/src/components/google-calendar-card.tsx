@@ -4,20 +4,19 @@ import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { getGoogleAuthUrl, getGoogleLinkStatus, type GoogleLinkStatus } from "@/services/google.service"
 
-const userId = 1
 const phoneNumber = "9999999999"
 
 export function GoogleCalendarCard() {
   const [status, setStatus] = useState<GoogleLinkStatus | null>(null)
 
   useEffect(() => {
-    getGoogleLinkStatus(userId)
+    getGoogleLinkStatus()
       .then((data) => setStatus(data))
       .catch(() => setStatus(null))
   }, [])
 
   const handleLink = () => {
-    window.location.href = getGoogleAuthUrl(userId, phoneNumber)
+    window.location.href = getGoogleAuthUrl(phoneNumber)
   }
 
   const isLinked = Boolean(status?.linked)
