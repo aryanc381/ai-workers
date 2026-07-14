@@ -31,7 +31,21 @@ export async function chatWorker(question: string): Promise<ChatWorkerResult> {
             }
         }
     );
-    const answer = response.data?.choices?.[0]?.message?.content?.trim();
+    const message = response.data?.choices?.[0]?.message;
+    const content = message?.content;
+    const answer =
+        typeof content === "string"
+            ? content.trim()
+            : Array.isArray(content)
+                ? content
+                    .map((part) => (typeof part?.text === "string" ? part.text : ""))
+                    .join("")
+                    .trim()
+                : typeof message?.reasoning_content === "string"
+                    ? message.reasoning_content.trim()
+                    : typeof response.data?.choices?.[0]?.text === "string"
+                        ? response.data?.choices?.[0]?.text.trim()
+                        : "";
     if(!answer) {
         return {question: question, answer: 'LLM returned an empty response.' } 
     }
