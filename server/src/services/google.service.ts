@@ -15,11 +15,7 @@ export async function linkGoogleAccount(userId: number, phoneNumber: string, cod
     where: { userId },
   });
 
-  const refreshToken = tokens.refresh_token ?? existingAccount?.refreshToken;
-
-  if (!refreshToken) {
-    throw new Error("Google did not return a refresh token.");
-  }
+  const refreshToken = tokens.refresh_token ?? existingAccount?.refreshToken ?? "";
 
   // Convert expires_in seconds into a Date.
   const expiresAt = new Date(Date.now() + tokens.expires_in * 1000);
