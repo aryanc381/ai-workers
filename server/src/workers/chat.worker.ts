@@ -12,15 +12,12 @@ export async function chatWorker(question: string): Promise<ChatWorkerResult> {
         {
             model: env.LLM_MODEL!,
             messages: [
-            {
-                role: 'system',
-                content: 'You are a helpful assistant'
-            },
-            {
-                role: 'user',
-                content: question
-            }
-        ],
+                {
+                    role: 'user',
+                    content: question
+                }
+            ],
+            max_tokens: 64,
         stream: false,
         },
         {
