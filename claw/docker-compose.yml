@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: openclaw
     ports:
       - "18789:18789"
     volumes:
