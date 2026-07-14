@@ -1,0 +1,14 @@
+services:
+  claw:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openclaw
+    ports:
+      - "18789:18789"
+    volumes:
+      - openclaw-state:/home/node/.openclaw
+    command: ["--allow-unconfigured"]
+
+volumes:
+  openclaw-state:
