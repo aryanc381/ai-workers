@@ -7,7 +7,7 @@ export default function DashboardPage() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <SiteHeader />
+        <SiteHeader title="Configuration" />
         <div className="flex flex-1 flex-col gap-4 p-4">
           
         </div>
