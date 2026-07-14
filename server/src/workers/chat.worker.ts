@@ -8,9 +8,9 @@ type ChatWorkerResult = {
 
 export async function chatWorker(question: string): Promise<ChatWorkerResult> {
     const response = await axios.post(
-        `${env.LLM_API_URL}`, 
+        env.LLM_API_URL!,
         {
-            model: env.LLM_MODEL,
+            model: env.LLM_MODEL!,
             messages: [
             {
                 role: 'system',
@@ -25,7 +25,9 @@ export async function chatWorker(question: string): Promise<ChatWorkerResult> {
         },
         {
             headers: {
-                Authorization: `Bearer ${env.LLM_API_KEY}`
+                Authorization: `Bearer ${env.LLM_API_KEY!}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
             }
         }
     );
