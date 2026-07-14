@@ -11,26 +11,48 @@ export async function linkGoogleAccount(userId: number, phoneNumber: string, cod
   // Read the linked Google identity from the access token.
   const identity = await fetchGoogleAccountIdentity(tokens.access_token);
 
-  const existingByUser = await prisma.googleAccount.findUnique({
-    where: { userId },
-  });
+  return prisma.$transaction(async (tx) => {
+    const existingByUser = await tx.googleAccount.findUnique({
+      where: { userId },
+    });
 
-  const existingBySubject = await prisma.googleAccount.findUnique({
-    where: { googleSubjectId: identity.googleSubjectId },
-  });
+    const existingBySubject = await tx.googleAccount.findUnique({
+      where: { googleSubjectId: identity.googleSubjectId },
+    });
 
-  if (existingBySubject && existingBySubject.userId !== userId) {
-    throw new Error("This Google account is already linked to another user.");
-  }
+    const refreshToken = tokens.refresh_token ?? existingByUser?.refreshToken ?? existingBySubject?.refreshToken ?? "";
 
-  const refreshToken = tokens.refresh_token ?? existingByUser?.refreshToken ?? existingBySubject?.refreshToken ?? "";
+    // Convert expires_in seconds into a Date.
+    const expiresAt = new Date(Date.now() + tokens.expires_in * 1000);
 
-  // Convert expires_in seconds into a Date.
-  const expiresAt = new Date(Date.now() + tokens.expires_in * 1000);
+    // If the same Google account is already linked elsewhere, move it to this user.
+    if (existingBySubject && existingBySubject.userId !== userId) {
+      if (existingByUser && existingByUser.id !== existingBySubject.id) {
+        await tx.googleAccount.delete({
+          where: { userId },
+        });
+      }
 
-  // Save or update the linked Google account for this user.
-  const googleAccount = existingByUser
-    ? await prisma.googleAccount.update({
+      return tx.googleAccount.update({
+        where: {
+          googleSubjectId: identity.googleSubjectId,
+        },
+        data: {
+          userId,
+          phoneNumber,
+          googleEmail: identity.googleEmail,
+          accessToken: tokens.access_token,
+          refreshToken,
+          expiresAt,
+          scopes: tokens.scope,
+          status: "active",
+        },
+      });
+    }
+
+    // Save or update the linked Google account for this user.
+    if (existingByUser) {
+      return tx.googleAccount.update({
         where: {
           userId,
         },
@@ -44,21 +66,22 @@ export async function linkGoogleAccount(userId: number, phoneNumber: string, cod
           scopes: tokens.scope,
           status: "active",
         },
-      })
-    : await prisma.googleAccount.create({
-        data: {
-          userId,
-          phoneNumber,
-          googleEmail: identity.googleEmail,
-          googleSubjectId: identity.googleSubjectId,
-          accessToken: tokens.access_token,
-          refreshToken,
-          expiresAt,
-          scopes: tokens.scope,
-        },
       });
+    }
 
-  return googleAccount;
+    return tx.googleAccount.create({
+      data: {
+        userId,
+        phoneNumber,
+        googleEmail: identity.googleEmail,
+        googleSubjectId: identity.googleSubjectId,
+        accessToken: tokens.access_token,
+        refreshToken,
+        expiresAt,
+        scopes: tokens.scope,
+      },
+    });
+  });
 }
 
 export async function getGoogleAccountStatus(userId: number) {
