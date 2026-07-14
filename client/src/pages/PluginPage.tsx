@@ -9,8 +9,10 @@ export default function PluginPage() {
       <AppSidebar />
       <SidebarInset>
         <SiteHeader title="Plugins" />
-        <div className="flex flex-1 flex-col gap-4 bg-gradient-to-b from-background to-muted/20 p-4 lg:p-6">
-          <GoogleCalendarCard />
+        <div className="min-h-[calc(100vh-4rem)] flex-1 bg-gradient-to-b from-background to-muted/20 p-[2vw]">
+          <div className="grid gap-[2vw] md:grid-cols-2 xl:grid-cols-3">
+            <GoogleCalendarCard />
+          </div>
         </div>
       </SidebarInset>
     </SidebarProvider>

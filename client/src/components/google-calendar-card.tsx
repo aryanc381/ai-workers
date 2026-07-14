@@ -23,16 +23,20 @@ export function GoogleCalendarCard() {
   const isLinked = Boolean(status?.linked)
 
   return (
-    <Card className="relative max-w-2xl overflow-hidden border-border/60 bg-background/90 shadow-sm">
-      <CardHeader className="space-y-4">
-        <div className="flex items-start justify-between gap-3">
+    <Card className="relative h-full min-h-[32vh] w-full overflow-hidden border-border/60 bg-background/90 shadow-sm">
+      <CardHeader className="space-y-[1vh] p-[1vw]">
+        <div className="flex items-start justify-between gap-[1vw]">
           <div>
             <CardTitle className="text-2xl">Google Calendar</CardTitle>
-            <CardDescription className="mt-1 max-w-lg">
+            <CardDescription className="mt-[0.5vh] max-w-lg">
               Link your calendar so the agent can block time and manage availability.
             </CardDescription>
           </div>
-          <div className={cn("mr-2 flex size-11 items-center justify-center overflow-hidden bg-background")}>
+          <div
+            className={cn(
+              "mr-[0.75vw] flex h-[3vw] w-[3vw] min-h-10 min-w-10 max-h-12 max-w-12 items-center justify-center overflow-hidden bg-background"
+            )}
+          >
             <img
               src="/google-calendar-logo.png"
               alt="Google Calendar"
@@ -40,20 +44,20 @@ export function GoogleCalendarCard() {
             />
           </div>
         </div>
-        <div className="grid gap-3 rounded-2xl border border-dashed border-border/70 bg-muted/30 p-4 text-sm sm:grid-cols-2">
+        <div className="grid gap-[0.75vw] rounded-2xl border border-dashed border-border/70 bg-muted/30 p-[1vw] text-sm sm:grid-cols-2">
           <div>
             <div className="text-muted-foreground">Google Email</div>
-            <div className="mt-1 font-medium">{status?.googleAccount?.googleEmail ?? "-"}</div>
+            <div className="mt-[0.4vh] font-medium">{status?.googleAccount?.googleEmail ?? "-"}</div>
           </div>
           <div>
             <div className="text-muted-foreground">Phone Number</div>
-            <div className="mt-1 font-medium">{status?.googleAccount?.phoneNumber ?? phoneNumber}</div>
+            <div className="mt-[0.4vh] font-medium">{status?.googleAccount?.phoneNumber ?? phoneNumber}</div>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-3">
-        <div className="rounded-2xl border border-border/70 bg-muted/20 p-4 text-sm">
-          <div className="flex items-center justify-between gap-3">
+      <CardContent className="space-y-[1vh] p-[1vw] pt-0">
+        <div className="rounded-2xl border border-border/70 bg-muted/20 p-[1vw] text-sm">
+          <div className="flex items-center justify-between gap-[0.75vw]">
             <span className="text-muted-foreground">Link status</span>
             <span className="font-medium">{isLinked ? "Linked" : "Awaiting connection"}</span>
           </div>
